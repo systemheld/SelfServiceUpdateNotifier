@@ -1,0 +1,24 @@
+/* install all */
+"alle installieren" = "install all";
+
+/* all updates were installed */
+"App Updates installiert" = "App updates installed";
+
+/* there are App Updates available */
+"App Updates verfügbar" = "App updates available";
+
+/* there are %d updates available */
+"Es stehen %d Updates für dich bereit" = "%d updates waiting on you";
+
+/* open the Self Service Application */
+"FAUmac Self Service öffnen" = "open FAUmac Self Service";
+
+/* install now */
+"installieren" = "install";
+
+/* install later */
+"später" = "later";
+
+/* all updates were successfully installed */
+"Updates wurden erfolgreich installiert" = "Updates were successfully installed";
+
