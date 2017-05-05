@@ -11,7 +11,7 @@ This is a Tool that notifies the currently logged in user that Application updat
 
 ## Building instructions
 
-1. copy `config.swift.sample` to `config.swift` and adjust to your needs. The parameters should be self explanory.
+1. copy `config.swift.sample` to `config.swift` and adjust to your needs. The parameters should be self explanatory.
 	* `updatesCategory` is the Category shown in the Self Service which holds the Updates. This is, what will be counted and executed.
 	* `ignoreStringsToMatch` is a array of substrings that will be matched to the policy names. If they match, this update will not be counted and not executed. You may use this to exclude Major OS upgrades to be installed automatically.
 2. Change the AppIcon to match your Corporate Design
