@@ -1,0 +1,18 @@
+# SelfServiceUpdateNotifier
+
+This is a Tool that notifies the currently logged in user that Application updates in the JAMF Pro (formerly known as Casper Suite) are available. The User can then decide to:
+	* automatically install all updates
+	* open the Self Service App to install some updates by himself
+	* discard that notification
+
+## Screenshot
+
+![Screenshot](Screenshot.png?raw=true) 
+
+## Building instructions
+
+1. copy `config.swift.sample` to `config.swift` and adjust to your needs. The parameters should be self explanory.
+	* `updatesCategory` is the Category shown in the Self Service which holds the Updates. This is, what will be counted and executed.
+	* `ignoreStringsToMatch` is a array of substrings that will be matched to the policy names. If they match, this update will not be counted and not executed. You may use this to exclude Major OS upgrades to be installed automatically.
+2. Change the AppIcon to match your Corporate Design
+3. Deploy to your clients and run either via launchd or a policy.
