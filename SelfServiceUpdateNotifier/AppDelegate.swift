@@ -80,6 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
         
         if policyIDs.count == 0 {
+            NSLog("no updates available")
             self.quit()
         }
         
