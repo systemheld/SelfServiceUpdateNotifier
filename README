@@ -16,3 +16,6 @@ This is a Tool that notifies the currently logged in user that Application updat
 	* `ignoreStringsToMatch` is a array of substrings that will be matched to the policy names. If they match, this update will not be counted and not executed. You may use this to exclude Major OS upgrades to be installed automatically.
 2. Change the AppIcon to match your Corporate Design
 3. Deploy to your clients and run either via launchd or a policy.
+	* if running via a policy, use the following command to ensure that this policy does not block the execution of other policies while waiting for user input
+	* `screen -d -m sh -c "pgrep -x -q SelfServiceUpdateNotifier || /path/to/SelfServiceUpdateNotifier.app/Contents/MacOS/SelfServiceUpdateNotifier"`
+	* the `screen` session will terminate immediately after SelfServiceUpdateNotifier has exited. If there is already a process running, no additional process will be started
