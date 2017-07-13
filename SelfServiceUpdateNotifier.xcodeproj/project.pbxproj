@@ -10,9 +10,36 @@
 		D604004A1EBA349B0024611A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D604004C1EBA349B0024611A /* Localizable.strings */; };
 		D66128DB1EBA275F00D36782 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D66128DA1EBA275F00D36782 /* MainMenu.xib */; };
 		D6C5ADD31EBA2EF300F89A8E /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C5ADD21EBA2EF300F89A8E /* config.swift */; };
+		D6C748401F177F7B006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = D6C748391F17653F006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist */; };
+		D6C748411F177F7B006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = D6C7483D1F177375006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist */; };
+		D6C748431F177F9C006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = D6C7483B1F176592006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist */; };
 		D6DA4A9B1E9B959E001298EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DA4A9A1E9B959E001298EE /* AppDelegate.swift */; };
 		D6DA4A9D1E9B959E001298EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6DA4A9C1E9B959E001298EE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D6C7483F1F177F4F006678B5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /Library/LaunchAgents;
+			dstSubfolderSpec = 0;
+			files = (
+				D6C748401F177F7B006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist in CopyFiles */,
+				D6C748411F177F7B006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D6C748421F177F8C006678B5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /Library/LaunchDaemons;
+			dstSubfolderSpec = 0;
+			files = (
+				D6C748431F177F9C006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D604004B1EBA349B0024611A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -20,6 +47,9 @@
 		D604004E1EBA34A00024611A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D66128DA1EBA275F00D36782 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		D6C5ADD21EBA2EF300F89A8E /* config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
+		D6C748391F17653F006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist"; sourceTree = "<group>"; };
+		D6C7483B1F176592006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist"; sourceTree = "<group>"; };
+		D6C7483D1F177375006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist"; sourceTree = "<group>"; };
 		D6DA4A971E9B959E001298EE /* SelfServiceUpdateNotifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SelfServiceUpdateNotifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6DA4A9A1E9B959E001298EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6DA4A9C1E9B959E001298EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,6 +87,9 @@
 		D6DA4A991E9B959E001298EE /* SelfServiceUpdateNotifier */ = {
 			isa = PBXGroup;
 			children = (
+				D6C748391F17653F006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist */,
+				D6C7483B1F176592006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist */,
+				D6C7483D1F177375006678B5 /* de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist */,
 				D6DA4A9A1E9B959E001298EE /* AppDelegate.swift */,
 				D6C5ADD21EBA2EF300F89A8E /* config.swift */,
 				D6DA4A9C1E9B959E001298EE /* Assets.xcassets */,
@@ -76,6 +109,8 @@
 				D6DA4A931E9B959E001298EE /* Sources */,
 				D6DA4A941E9B959E001298EE /* Frameworks */,
 				D6DA4A951E9B959E001298EE /* Resources */,
+				D6C7483F1F177F4F006678B5 /* CopyFiles */,
+				D6C748421F177F8C006678B5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -260,6 +295,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C8F68RFW4L;
 				INFOPLIST_FILE = SelfServiceUpdateNotifier/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/FAUmac/Applications/";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-erlangen.rrze.SelfServiceUpdateNotifier";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -275,6 +311,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C8F68RFW4L;
 				INFOPLIST_FILE = SelfServiceUpdateNotifier/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/FAUmac/Applications/";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-erlangen.rrze.SelfServiceUpdateNotifier";
 				PRODUCT_NAME = "$(TARGET_NAME)";

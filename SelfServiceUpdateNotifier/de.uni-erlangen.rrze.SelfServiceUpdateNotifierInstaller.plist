@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/jamf</string>
+		<string>policy</string>
+		<string>-trigger</string>
+		<string>installAllSelfServiceUpdates</string>
+	</array>
+	<key>WatchPaths</key>
+	<array>
+		<string>/Library/Application Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstaller</string>
+	</array>
+</dict>
+</plist>

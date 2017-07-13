@@ -1,0 +1,18 @@
+#!/bin/bash
+
+files=(
+	"/Library/LaunchAgents/de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist"
+	"/Library/LaunchDaemons/de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist"
+	"/Library/LaunchAgents/de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist"
+)
+
+for f in ${files[@]}; do
+	if [[ -f $f ]]; then
+		identifier=$(basename $f | sed 's/.plist$//')
+		launchctl list $identifier 2>&1 > /dev/null
+		if [[ $? -eq 0 ]]; then
+			launchctl unload $f
+		fi
+	fi
+done
+

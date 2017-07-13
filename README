@@ -15,7 +15,15 @@ This is a Tool that notifies the currently logged in user that Application updat
 	* `updatesCategory` is the Category shown in the Self Service which holds the Updates. This is, what will be counted and executed.
 	* `ignoreStringsToMatch` is a array of substrings that will be matched to the policy names. If they match, this update will not be counted and not executed. You may use this to exclude Major OS upgrades to be installed automatically.
 2. Change the AppIcon to match your Corporate Design
-3. Deploy to your clients and run either via launchd or a policy.
-	* if running via a policy, use the following command to ensure that this policy does not block the execution of other policies while waiting for user input
-	* `screen -d -m sh -c "pgrep -x -q SelfServiceUpdateNotifier || /path/to/SelfServiceUpdateNotifier.app/Contents/MacOS/SelfServiceUpdateNotifier"`
-	* the `screen` session will terminate immediately after SelfServiceUpdateNotifier has exited. If there is already a process running, no additional process will be started
+3. all your Updates need the same custom event that triggers their install. More on this later.
+4. create a policy that runs as last update policy (e.g. prefix policy name with ZZZ).
+	* this policy needs to `touch /Library/Application\ Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstallerDone`
+5. Deploy to your clients (run `build.sh`).
+
+## How does it work?
+Basically this works with two LaunchAgents and a LaunchDaemon that installs the updates.
+1. LaunchAgent `de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist`: runs the GUI App at login and once every n seconds. Defaults to 604800 which is one week. If the user opts-in for installing updates, `/Library/Application\ Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstaller` is touched.
+2. LaunchDaemon `de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist`: runs when `/Library/Application\ Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstaller` is touched. Runs a command to install all updates. This is where the custom trigger from above comes in. All polices that are Self Service installable updates need to have this custom event, so they are installed on `jamf policy -trigger installAllSelfServiceUpdates`
+3. LaunchAgent `de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist`: runs when `/Library/Application\ Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstaller` is touched. Your last update policy should touch this file. This policy should be only activated by the custom event and of course NOT Self Service enabled. A trick to ensure that this policy runs last, is to prefix it with `ZZZ`. This launch Agent again start the GUI App, but only displays a notification letting the user know, that updates have finished installing.
+
+The LaunchAgents run as user, the LauchDaemon as root. `/Library/Application\ Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstaller` `/Library/Application\ Support/FAUmac/.triggerInstallAllSelfServiceUpdatesInstallerDone` are created by the postinstall script. Be aware that the folder containing these files need to be world-readable and the files itself need to be world-writeable (but not readable!), so they can be touched but not deleted. Folder and files should belong to `root:wheel`, otherwise this trick does not work.

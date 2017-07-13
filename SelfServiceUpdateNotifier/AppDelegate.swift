@@ -33,8 +33,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // run everything in background
-        DispatchQueue.global().async {
-            self.searchAndShowUpdates()
+        if CommandLine.arguments.count >= 2 && CommandLine.arguments[1] == "notify" {
+            // App is run from LaunchAgent to notify user on completed updates
+            let notification = NSUserNotification()
+            notification.title = config.appName
+            notification.subtitle = NSLocalizedString("App Updates installiert", comment: "all updates were installed")
+            notification.informativeText = NSLocalizedString("Updates wurden erfolgreich installiert", comment: "all updates were successfully installed")
+            notification.hasActionButton = false
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
+            self.quit()
+        } else {
+            DispatchQueue.global().async {
+                self.searchAndShowUpdates()
+            }
         }
     }
     
@@ -81,30 +93,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         
         if policyIDs.count == 0 {
             NSLog("no updates available")
-            self.quit()
-        }
-        
-        let notification = NSUserNotification()
-        notification.title = config.appName
-        notification.subtitle = NSLocalizedString("App Updates verfügbar", comment: "there are App Updates available")
-        notification.informativeText = String(format: NSLocalizedString("Es stehen %d Updates für dich bereit", comment: "there are %d updates available"), policyIDs.count)
-        notification.hasActionButton = true
-        notification.actionButtonTitle = NSLocalizedString("installieren", comment: "install now")
+            DispatchQueue.main.async {
+                self.quit()
+            }
+        } else {
+            let notification = NSUserNotification()
+            notification.title = config.appName
+            notification.subtitle = NSLocalizedString("App Updates verfügbar", comment: "there are App Updates available")
+            notification.informativeText = String(format: NSLocalizedString("Es stehen %d Updates für dich bereit", comment: "there are %d updates available"), policyIDs.count)
+            notification.hasActionButton = true
+            notification.actionButtonTitle = NSLocalizedString("installieren", comment: "install now")
             notification.otherButtonTitle = NSLocalizedString("später", comment: "install later")
-        notification.soundName = NSUserNotificationDefaultSoundName
-        // this is undocumented!
-        notification.setValue(true, forKey: "_alwaysShowAlternateActionMenu")
-        notification.additionalActions = [
-            NSUserNotificationAction(identifier: "installAll", title: NSLocalizedString("alle installieren", comment: "install all")),
-            NSUserNotificationAction(identifier: "openSelfService", title: NSLocalizedString("FAUmac Self Service öffnen", comment: "open the Self Service Application")),
-        ]
-        notification.userInfo = [
-            "policyIDs": policyIDs
-        ]
-        
-        let center = NSUserNotificationCenter.default
-        center.delegate = self
-        center.deliver(notification)
+            notification.soundName = NSUserNotificationDefaultSoundName
+            // this is undocumented!
+            notification.setValue(true, forKey: "_alwaysShowAlternateActionMenu")
+            notification.additionalActions = [
+                NSUserNotificationAction(identifier: "installAll", title: NSLocalizedString("alle installieren", comment: "install all")),
+                NSUserNotificationAction(identifier: "openSelfService", title: NSLocalizedString("FAUmac Self Service öffnen", comment: "open the Self Service Application")),
+            ]
+            
+            let center = NSUserNotificationCenter.default
+            center.delegate = self
+            center.deliver(notification)
+        }
     }
     
     // MARK: NSUserNotificationCenterDelegate methods
@@ -123,20 +134,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         case .additionalActionClicked:
             switch notification.additionalActivationAction!.identifier! {
             case "installAll":
-                let policies = notification.userInfo?["policyIDs"] as! [Int]
-                for id in policies {
-                    NSLog("installing Update with ID \(id)")
-                    let task = Process.launchedProcess(launchPath: config.jamfPath, arguments: ["policy", "-id", String(id)])
-                    task.waitUntilExit()
-                    // TODO: jamf does always exit(0) so we need another way to determine if installing an update worked
+                let touch = Process.launchedProcess(launchPath: "/usr/bin/touch", arguments: [config.triggerFile])
+                touch.waitUntilExit()
+                if touch.terminationStatus != 0 {
+                    NSLog("error touching file \(config.triggerFile). Maybe i have no permission to write there?")
                 }
-                let notification = NSUserNotification()
-                notification.title = config.appName
-                notification.subtitle = NSLocalizedString("App Updates installiert", comment: "all updates were installed")
-                notification.informativeText = NSLocalizedString("Updates wurden erfolgreich installiert", comment: "all updates were successfully installed")
-                notification.hasActionButton = false
-                notification.soundName = NSUserNotificationDefaultSoundName
-                NSUserNotificationCenter.default.deliver(notification)
+            // TODO: jamf does always exit(0) so we need another way to determine if installing an update worked
             case "openSelfService":
                 NSWorkspace.shared().launchApplication(config.selfServicePath)
                 NSLog("launched Self Service")

@@ -11,6 +11,7 @@ import Foundation
 struct config {
     static let appName = "Self Service"
     static let jamfPath = "/usr/local/bin/jamf"
+    static let triggerFile = "/Library/Application Support/JAMF/.triggerInstallAllSelfServiceUpdatesInstaller"
     static let selfServicePath = "/Applications/Self Service.app"
     static let jssHost = "jss.your.corp.com:8443"
     static let updatesCategory = "Updates"

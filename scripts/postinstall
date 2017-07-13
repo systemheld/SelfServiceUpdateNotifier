@@ -1,0 +1,19 @@
+#!/bin/bash
+
+console_user=$(stat -f %Su /dev/console)
+basePath="/Library/Application Support/FAUmac/"
+files=(
+	".triggerInstallAllSelfServiceUpdatesInstaller"
+	".triggerInstallAllSelfServiceUpdatesInstallerDone"
+)
+
+for f in ${files[@]}; do
+	touch "$basePath/$f"
+	chown root:wheel "$basePath/$f"
+	# prevent users from deleting this file, `touch` works though
+	chmod 642 "$basePath/$f"
+done
+
+sudo -u $console_user launchctl load /Library/LaunchAgents/de.uni-erlangen.rrze.SelfServiceUpdateNotifier.plist
+launchctl load /Library/LaunchDaemons/de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstaller.plist
+sudo -u $console_user launchctl load /Library/LaunchAgents/de.uni-erlangen.rrze.SelfServiceUpdateNotifierInstallerDone.plist
