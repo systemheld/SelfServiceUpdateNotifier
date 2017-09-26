@@ -32,6 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // first, delete all old notifications
+        NSUserNotificationCenter.default.removeAllDeliveredNotifications()
+        
         // run everything in background
         if CommandLine.arguments.count >= 2 && CommandLine.arguments[1] == "notify" {
             // App is run from LaunchAgent to notify user on completed updates
